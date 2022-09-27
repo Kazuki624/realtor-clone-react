@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getFirestore} from "firebase/firestore"
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,9 +11,9 @@ const firebaseConfig = {
   projectId: "realtor-clone-react-d36a5",
   storageBucket: "realtor-clone-react-d36a5.appspot.com",
   messagingSenderId: "1050731576014",
-  appId: "1:1050731576014:web:10bc1ce5811ed8bbcdae9f"
+  appId: "1:1050731576014:web:10bc1ce5811ed8bbcdae9f",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore()
+initializeApp(firebaseConfig);
+export const db = getFirestore();
