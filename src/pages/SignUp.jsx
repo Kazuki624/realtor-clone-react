@@ -40,7 +40,7 @@ export const SignUp = () => {
       updateProfile(auth.currentUser, {
         displayName: name,
       });
-      const user = userCredential.user; //userIDが格納さrている
+      const user = userCredential.user; //userIDが格納されている
       const formDataCopy = { ...formData }; //ユーザのパスワード情報をFirebaseに登録、表示させないようにする
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp(); //登録日をserverTimestampオブジェクトで明記
