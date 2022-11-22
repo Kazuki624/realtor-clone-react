@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { Profile } from "./pages/Profile";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
+import { PrivateRoute } from "./components/PrivateRoute";
 import { ForgetPassword } from "./pages/ForgetPassword";
 import { Offers } from "./pages/Offers";
 import Header from "./components/Header";
@@ -17,8 +18,11 @@ function App() {
       <Router>
         <Header />
         <Routes>
+          {/* outletを用いて、サインインする際に子ルート(Profile)がレンダリングされ表示される */}
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
