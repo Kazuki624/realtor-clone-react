@@ -20,12 +20,14 @@ export const Profile = () => {
         auth.signOut()
         navigate("/")
     }
+    // onChangeイベント。useStateで登録されたユーザネームを持ってきて、onChangeイベントでセットされた新たなユーザ名を表示
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
             [e.target.id] : e.target.value,
         }))
     }
+    // 非同期処理で、新たにセットされたユーザ名が元のユーザ名と違う場合に、firebaseのユーザ名(元のユーザ名)をアップデートし、新たなユーザ名に変更する
     const  onSubmit = async() => {
      try{
       if(auth.currentUser.displayName !== name){
