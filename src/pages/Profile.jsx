@@ -1,10 +1,12 @@
-import { async } from "@firebase/util";
 import { getAuth, updateProfile } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react"
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
+import {FcHome} from "react-icons/fc"
+import { Link } from "react-router-dom";
+import { async } from "@firebase/util";
 
 export const Profile = () => {
     // inputに出力されるデータをAuthから取得し、変更するとsetFromDateに格納される
@@ -28,22 +30,38 @@ export const Profile = () => {
         }))
     }
     // 非同期処理で、新たにセットされたユーザ名が元のユーザ名と違う場合に、firebaseのユーザ名(元のユーザ名)をアップデートし、新たなユーザ名に変更する
-    const  onSubmit = async() => {
-     try{
-      if(auth.currentUser.displayName !== name){
-       // update display name in firebase auth
-       await updateProfile(auth.currentUser, {
-        displayName : name
-       })
-       // update name in the firestore
-       const docRef = doc(db, "users", auth.currentUser.uid)
-       await updateDoc(docRef, {
-        name : name
-       })
-      }
-      toast.success("Profile details updated")
+//     const onSubmit = async () => {
+//      try{
+//       if(auth.currentUser.displayName !== name){
+//        // update display name in firebase auth
+//        await updateProfile(auth.currentUser, {
+//         displayName : name
+//        })
+//        // update name in the firestore
+//        const docRef = doc(db, "users", auth.currentUser.uid)
+//        await updateDoc(docRef, {
+//         name : name
+//        })
+//       }
+//       toast.success("Profile details updated")
+//      }catch(error){
+//       toast.error("Could not update the profile details")
+//      }
+//     }
+    const onSubmit = async () => {
+     try {
+          if(auth.currentUser.displayName !== name) {
+               await updateProfile(auth.currentUser, {
+                    displayName : name
+               })
+               const docRef = doc(db, "users", auth.currentUser.uid);
+               await updateDoc(docRef, {
+                    name : name
+               })
+          }
+          toast.success("Profile details updated")
      }catch(error){
-      toast.error("Could not update the profile details")
+          toast.error("Could not update the profile details")
      }
     }
     return(
@@ -73,6 +91,14 @@ export const Profile = () => {
                         </p>
                     </div>
                 </form>
+                <button type="submit" 
+                        className="w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800">
+                    <Link to="/create-listing" 
+                          className="flex justify-center items-center ">
+                         <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2 "/>
+                         Sell or rent your home
+                    </Link>
+                </button>
             </div>
         </section>
         </>
