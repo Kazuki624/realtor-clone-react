@@ -1,17 +1,22 @@
 import { getAuth, updateProfile } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { useState } from "react"
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { db } from "../firebase";
 import {FcHome} from "react-icons/fc"
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { ListingItem } from "../components/ListingItem";
+import { async } from "@firebase/util";
 
 export const Profile = () => {
     // inputに出力されるデータをAuthから取得し、変更するとsetFromDateに格納される
     const auth = getAuth()
     const navigate = useNavigate()
     const [changeDetail, setChangeDetail] = useState(false)
+    const [listings, setListings] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [formData, setFormData] = useState({
         name : auth.currentUser.displayName,
         email : auth.currentUser.email,
@@ -29,44 +34,47 @@ export const Profile = () => {
         }))
     }
     // 非同期処理で、新たにセットされたユーザ名が元のユーザ名と違う場合に、firebaseのユーザ名(元のユーザ名)をアップデートし、新たなユーザ名に変更する
-//     const onSubmit = async () => {
-//      try{
-//       if(auth.currentUser.displayName !== name){
-//        // update display name in firebase auth
-//        await updateProfile(auth.currentUser, {
-//         displayName : name
-//        })
-//        // update name in the firestore
-//        const docRef = doc(db, "users", auth.currentUser.uid)
-//        await updateDoc(docRef, {
-//         name : name
-//        })
-//       }
-//       toast.success("Profile details updated")
-//      }catch(error){
-//       toast.error("Could not update the profile details")
-//      }
-//     }
     const onSubmit = async () => {
-     try {
-          if(auth.currentUser.displayName !== name) {
-               await updateProfile(auth.currentUser, {
-                    displayName : name
-               })
-               const docRef = doc(db, "users", auth.currentUser.uid);
-               await updateDoc(docRef, {
-                    name : name
-               })
+          try {
+               if(auth.currentUser.displayName !== name) {
+                    await updateProfile(auth.currentUser, {
+                         displayName : name
+                    })
+                    const docRef = doc(db, "users", auth.currentUser.uid);
+                    await updateDoc(docRef, {
+                         name : name
+                    })
+               }
+               toast.success("Profile details updated")
+          }catch(error){
+               toast.error("Could not update the profile details")
           }
-          toast.success("Profile details updated")
-     }catch(error){
-          toast.error("Could not update the profile details")
      }
-    }
+     useEffect(() => {   //useEffectで一度だけ情報を呼び出す。呼び出す情報は自分でDBに登録したデータ情報
+          const fetchUserListings = async() => {
+               const listingRef = collection(db, "listings");
+               const q = query(
+                    listingRef, 
+                    where("userRef", "==", auth.currentUser.uid), 
+                    orderBy("timestamp", "desc")
+               );
+               const querySnap = await getDocs(q);  //ユーザ情報をもとに取得したすべてのデータを含む
+               let listings = [];
+               querySnap.forEach((doc) => {
+                    return listings.push({
+                         id : doc.id,
+                         data : doc.data(),
+                    });
+               });
+               setListings(listings);
+               setLoading(false);
+          }
+          fetchUserListings();
+     }, [auth.currentUser.uid]);
     return(
         <>
         <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
-            <h1 className="text-3xl text-center mt-6 font-bold">MY Profile</h1>
+            <h1 className="text-3xl text-center mt-6 font-bold">プロフィール</h1>
             <div className="w-full md:w-[50%] mt-6 px-3">
                 <form>
                     {/* name input */}
@@ -76,17 +84,17 @@ export const Profile = () => {
 
                     <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
                         <p className="flex items-center">
-                            Do you want change your name ?
+                            ユーザ名の変更はこちらから
                             <span 
                                 onClick={() => {
                                   changeDetail && onSubmit()
                                   setChangeDetail((prevState) => !prevState)
                                 }} 
                                 className="text-red-600 hover:text-red-700 transition ease-in-out duration-200 ml-1 cursor-pointer">
-                                {changeDetail ? "Apply change" : "Edit"}</span>
+                                {changeDetail ? "変更を適用する" : "編集する"}</span>
                         </p>
                         <p onClick={onLogout} className="text-blue-600 hover:text-blue-800 transition ease-in-out duration-200 cursor-pointer">
-                            Sign out
+                            サインアウト
                         </p>
                     </div>
                 </form>
@@ -95,11 +103,23 @@ export const Profile = () => {
                     <Link to="/create-listing" 
                           className="flex justify-center items-center ">
                          <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2 "/>
-                         Sell or rent your home
+                         物件を提供する
                     </Link>
                 </button>
             </div>
         </section>
+        <div className="max-w-6xl px-3 mt-6 mx-auto">
+          {!loading && listings.length > 0 && (
+               <>
+                    <h2 className="text-2xl text-center font-semibold">自分の提供している物件</h2>
+                    <ul>
+                         {listings.map((listing) => (
+                              <ListingItem key={listing.id} id={listing.id} listing={listing.data} />
+                         ))}
+                    </ul>
+               </>
+          )}
+        </div>
         </>
     )
 }

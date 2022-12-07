@@ -121,7 +121,7 @@ export const CreateListing = () => {
                  );
                });
           }
-          const imgUrls = await Promise.all(
+          const imgUrls = await Promise.all(   //アップロードする画像をループで回し、storeImageに格納する
                [...images].map((image) => storeImage(image)) 
           ).catch((error) => {
                setLoading(false);
@@ -133,7 +133,8 @@ export const CreateListing = () => {
                ...formData,
                imgUrls,
                geolocation,
-               timestamp : serverTimestamp()
+               timestamp : serverTimestamp(), //制作日を明記する
+               userRef : auth.currentUser.uid,  //制作者情報を明記する
           };
           // firebaseのfirestoreDBのコレクションに投稿内容を入れる
           delete formDateCopy.images;
