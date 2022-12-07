@@ -73,7 +73,7 @@ export const Profile = () => {
      const onDelete = async (listingID) => {    //propsで該当の情報を受け取る
           if(window.confirm("本当に削除しますか？")){
                await deleteDoc(doc(db, "listings", listingID));   //非同期処理で該当のデータベースを指定する
-               const updatedListings = listings.filter(
+               const updatedListings = listings.filter(        //自分の投稿が格納してある変数「listing」をアップデートする。
                     (listing) => listing.id !== listingID
                );
                setListings(updatedListings);
@@ -81,8 +81,8 @@ export const Profile = () => {
           }
      }
      const onEdit = (listingID) => {
-          // propsで受け取ったデータIDをもとに編集する
-          navigate(`edit-listing/${listingID}`)
+          // propsで受け取ったデータIDをもとに編集ページに飛ばす
+          navigate(`/edit-listing/${listingID}`)
      }
     return(
         <>
