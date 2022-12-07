@@ -28,7 +28,9 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/offers" element={<Offers />} />
-          <Route path="/create-listing" element={<CreateListing />} />
+          <Route path="create-listing" element={<PrivateRoute />}> {/*ログイン時のみcreate-listingに行けるようにする*/}
+               <Route path="/create-listing" element={<CreateListing />} />
+          </Route>
         </Routes>
       </Router>
       <ToastContainer

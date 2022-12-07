@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { db } from "../firebase";
 import {FcHome} from "react-icons/fc"
 import { Link } from "react-router-dom";
-import { async } from "@firebase/util";
 
 export const Profile = () => {
     // inputに出力されるデータをAuthから取得し、変更するとsetFromDateに格納される
