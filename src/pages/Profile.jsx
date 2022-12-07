@@ -8,7 +8,6 @@ import {FcHome} from "react-icons/fc"
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { ListingItem } from "../components/ListingItem";
-import { async } from "@firebase/util";
 
 export const Profile = () => {
     // inputに出力されるデータをAuthから取得し、変更するとsetFromDateに格納される
@@ -111,8 +110,8 @@ export const Profile = () => {
         <div className="max-w-6xl px-3 mt-6 mx-auto">
           {!loading && listings.length > 0 && (
                <>
-                    <h2 className="text-2xl text-center font-semibold">自分の提供している物件</h2>
-                    <ul>
+                    <h2 className="text-2xl text-center font-semibold mb-6 mt-6">自分の提供している物件</h2>
+                    <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6"> 
                          {listings.map((listing) => (
                               <ListingItem key={listing.id} id={listing.id} listing={listing.data} />
                          ))}
