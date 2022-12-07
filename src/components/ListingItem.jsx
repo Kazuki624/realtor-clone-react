@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import {ImLocation, ImOpt} from 'react-icons/im';
+import {ImLocation} from 'react-icons/im';
 import { FaTrash } from 'react-icons/fa';
 import { RiEdit2Fill } from 'react-icons/ri'
 
@@ -9,7 +9,7 @@ import { RiEdit2Fill } from 'react-icons/ri'
 export const ListingItem = ({listing, id, onEdit, onDelete}) => {
   return (
      <li className='relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-lg rounded-md overflow-hidden transition-shadow duration-150 m-[10px]'>
-          <Link to={`/category${listing.type}/${id}`}>
+          <Link to={`/category/${listing.type}/${id}`}>
                <img src={listing.imgUrls[0]} className='w-full object-cover hover:scale-110 transition-scale duration-200 ease-in' loading='lazy'/>
                <Moment fromNow className='absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg'>{listing.timestamp?.toDate()}</Moment>
                <div className='w-full p-[10px]'>
