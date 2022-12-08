@@ -1,40 +1,131 @@
-import { collection, doc, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { useState } from "react";
-import { useEffect } from "react";
+import React from 'react'
 import { Slider } from "../components/Slider";
-import { Spinner } from "../components/Spinner";
-import { db } from "../firebase";
+import {useState ,useEffect} from "react";
+import { collection, query, where, orderBy, limit,getDocs,doc} from "firebase/firestore";
+import { db } from '../firebase';
+import { Link } from 'react-router-dom';
+import { ListingItem } from '../components/ListingItem';
 
 export const Home = () => {
-     const [listings, setListings] = useState(null);
-     const [loading, setLoading] = useState(true);
+     // Offers
+     const [offerListings, setOfferListings] = useState(null);
      useEffect(() => {
-          const fetchListings = async () => {
-               const listingsRef = collection(db, "listings");
-               const q = query(listingsRef, orderBy("timestamp", "desc"), limit(5));
-               const querySnap = await getDocs(q);
-               let listings = [];
-               querySnap.forEach((doc) => {
-                    return listings.push({
-                         id: doc.id,
-                         data: doc.data(),
+          const fetchListing = async () => {
+               try {
+                    // get refarence
+                    const listingsRef = collection(db, "listings")
+                    // create the query
+                    const q = query(listingsRef, where("offer", "==", true ), orderBy("timestamp", "desc"),limit(4));
+                    // execute query
+                    const querySnap = await getDocs(q);
+                    const listings = [];
+                    querySnap.forEach((doc) => {
+                         return listings.push({
+                              id : doc.id,
+                              data : doc.data()
+                         });
                     });
-               });
-               setListings(listings);
-               setLoading(false);
+                    setOfferListings(listings)
+               } catch (error) {
+               }
           }
-       fetchListings();
-     }, []);
-     if (loading) {
-       return <Spinner />;
-     }
-     if (listings.length === 0) {
-       return <></>;
-     }
+          fetchListing();
+      },[])
+     // place for rent
+     const [rentListings, setRentListings] = useState(null);
+     useEffect(() => {
+          const fetchListing = async () => {
+               try {
+                    const listingsRef = collection(db, "listings")
+                    const q = query(listingsRef, where("type", "==", "rent" ), orderBy("timestamp", "desc"),limit(4));
+                    const querySnap = await getDocs(q);
+                    const listings = [];
+                    querySnap.forEach((doc) => {
+                         return listings.push({
+                              id : doc.id,
+                              data : doc.data()
+                         });
+                    });
+                    setRentListings(listings);
+               } catch (error) {
+                    // console.log(error)
+               }
+          }
+          fetchListing();
+      },[])
+     //  place for sale
+     const [saleListings, setSaleListings] = useState(null);
+     useEffect(() => {
+          const fetchListing = async () => {
+               try {
+                    const listingsRef = collection(db, "listings")
+                    const q = query(listingsRef, where("type", "==", "sale" ), orderBy("timestamp", "desc"),limit(4));
+                    const querySnap = await getDocs(q);
+                    const listings = [];
+                    querySnap.forEach((doc) => {
+                         return listings.push({
+                              id : doc.id,
+                              data : doc.data()
+                         });
+                    });
+                    setSaleListings(listings);
+               } catch (error) {
+                    // console.log(error)
+               }
+          }
+          fetchListing();
+      },[])
     return(
         <>
           <div>
                <Slider />
+               <div className="max-w-6xl mx-auto pt-4 space-y-6">
+                    {offerListings && offerListings.length > 0 && (
+                         <div className="m-2 mb-6">
+                             <h2 className="px-3 text-2xl mt-6 font-semibold">最近の物件</h2>
+                             <Link to="/offers">
+                                   <p className='px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out'>最新物件をさらに見る</p>
+                             </Link>
+                             <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                                   {offerListings.map((listing) => (
+                                        <ListingItem key={listing.id} 
+                                                     listing={listing.data}
+                                                     id={listing.id}/>
+                                   ))}
+                             </ul>
+                         </div>
+                    )}
+                    {rentListings && rentListings.length > 0 && (
+                         <div className="m-2 mb-6">
+                             <h2 className="px-3 text-2xl mt-6 font-semibold">賃貸物件</h2>
+                             <Link to="/category/rent">
+                                   <p className='px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out'>賃貸物件をさらに見る</p>
+                             </Link>
+                             <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                                   {rentListings.map((listing) => (
+                                        <ListingItem key={listing.id} 
+                                                     listing={listing.data}
+                                                     id={listing.id}/>
+                                   ))}
+                             </ul>
+                         </div>
+                    )}
+                    {saleListings && saleListings.length > 0 && (
+                         <div className="m-2 mb-6">
+                             <h2 className="px-3 text-2xl mt-6 font-semibold">戸建物件</h2>
+                             <Link to="/category/sale">
+                                   <p className='px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out'>戸建物件をさらに見る</p>
+                             </Link>
+                             <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                                   {saleListings.map((listing) => (
+                                        <ListingItem key={listing.id} 
+                                                     listing={listing.data}
+                                                     id={listing.id}/>
+                                   ))}
+                             </ul>
+                         </div>
+                    )}
+               </div>
           </div>
         </>
     )
