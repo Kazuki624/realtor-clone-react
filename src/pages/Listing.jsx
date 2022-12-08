@@ -14,7 +14,7 @@ import { FaBath, FaParking } from 'react-icons/fa' ;
 import { GiSofa } from 'react-icons/gi';
 import { getAuth } from 'firebase/auth';
 import { Contact } from '../components/Contact';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';   //react-reafletを使用するため
  
 export const Listing = () => {
      const auth = getAuth();
@@ -137,7 +137,7 @@ export const Listing = () => {
                {contactLandLoad && <Contact userRef={listing.userRef} listing={listing} />}
           </div>
           <div className='w-full h-[250px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2'>
-               <MapContainer center={[listing.geolocation.latitude, listing.geolocation.lng]} 
+               <MapContainer center={[listing.geolocation.latitude, listing.geolocation.lng]}   //centerの値にDBの場所を利用する
                              zoom={13} 
                              scrollWheelZoom={false}
                              style={{height:"100%", width:"100%"}}>
@@ -145,7 +145,7 @@ export const Listing = () => {
                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={[listing.geolocation.latitude, listing.geolocation.lng]}>
+                    <Marker position={[listing.geolocation.latitude, listing.geolocation.lng]}>  
                          <Popup>
                               {listing.address}
                          </Popup>
