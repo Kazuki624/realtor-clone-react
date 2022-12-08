@@ -12,12 +12,16 @@ import { IoCopySharp,IoBed } from 'react-icons/io5';
 import { ImLocation } from 'react-icons/im';
 import { FaBath, FaParking } from 'react-icons/fa' ;
 import { GiSofa } from 'react-icons/gi';
+import { getAuth } from 'firebase/auth';
+import { Contact } from '../components/Contact';
  
 export const Listing = () => {
+     const auth = getAuth();
      const params = useParams(); //パラメータ取得
      const [listing, setListing] = useState(null);
      const [loading, setLoading] = useState(true);
      const [shareLinkCopy, setShareLinkCopy] = useState(false);
+     const [contactLandLoad, SetContactLandLoad] = useState(false)
      SwiperCore.use([Autoplay, Navigation, Pagination]);
      useEffect(() => {
           const fetchListing = async()=> {
@@ -67,7 +71,7 @@ export const Listing = () => {
           </p>
      )}
      <div className=' m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5'>
-          <div className='w-full h-[250px] lg-[400px]'>
+          <div className='w-full'>
                <p className='text-2xl font-bold mb-3 text-blue-900 '>
                     {listing.name} - {listing.offer ? 
                          listing.discountedPrice
@@ -99,7 +103,7 @@ export const Listing = () => {
                     <p className='font-semibold'>物件概要 - </p>
                     {listing.description}
                </p>
-               <ul className='flex items-center space-x-2 lg:space-x-10 text-sm font-semibold'>
+               <ul className='flex items-center space-x-2 lg:space-x-10 text-sm font-semibold mb-6'>
                     <li className=' flex items-center whitespace-nowrap'>
                          <IoBed className='text-lg mr-1' />
                          {+listing.bedrooms > 1 ? 
@@ -121,6 +125,15 @@ export const Listing = () => {
                          {+listing.furnished  ? `Furnished` : "Not Furnished" }
                     </li>
                </ul>
+               {listing.userRef !== auth.currentUser?.uid && !contactLandLoad && ( //視聴者が提供者であるときはコンタクトボタンを表示しない
+                    <div className='mt-6'>
+                         <button className='px-7 py-3 bg-blue-600 text-white font-medium text-center text-sm rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full transition duration-150 ease-in'
+                                 onClick={() => SetContactLandLoad(true)}>
+                              提供者に連絡する
+                         </button>
+                    </div>
+               )}
+               {contactLandLoad && <Contact userRef={listing.userRef} listing={listing} />}
           </div>
           <div className='bg-blue-300 w-full h-[250px] lg-[400px] z-10 overflow-x-hidden'>
 
