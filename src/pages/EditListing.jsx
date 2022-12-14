@@ -174,7 +174,7 @@ export const EditListing = () => {
           const docRef = doc(db, "listings",params.listingId)
           await updateDoc(docRef, formDateCopy);
           setLoading(false)
-          toast.success("編集内容を適用しました");
+          toast.success("success Updated");
           navigate(`/category/${formDateCopy.type}/${docRef.id}`);
      }
 
