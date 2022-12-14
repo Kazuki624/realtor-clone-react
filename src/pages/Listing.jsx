@@ -68,7 +68,7 @@ export const Listing = () => {
      </div>
      {shareLinkCopy && (
           <p className='fixed top-[23%] right-[5%] font-semibold border-2 border-gray-400 rounded-md bg-white z-10 p-2'>
-               リンクをコピーしました
+               copied link
           </p>
      )}
      <div className=' m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5'>
@@ -82,8 +82,9 @@ export const Listing = () => {
                          .toString()
                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
-                    <p className='text-2xl font-bold mb-3 text-blue-900 '>万円</p>
-                    {listing.type === "rent" && "万円 / 月"}
+                    <p className='text-2xl font-bold mb-3 text-blue-900 '>
+                         {listing.type === "rent" && "/ month"}
+                    </p>
                </p>
                <p className='flex items-center mt-6 mb-3 font-bold'>
                     <ImLocation className='h-4 w-4 text-green-600 mr-1'/>
@@ -91,47 +92,45 @@ export const Listing = () => {
                </p>
                <div className='flex justify-start items-center space-x-4 w-[75%]'>
                     <p className='bg-red-800 w-full max-w-[150px] rounded-md p-2 text-white text-center font-semibold shadow-md'>
-                         {listing.type === "rent" ? "賃貸物件" : "売買物件" }
+                         {listing.type === "rent" ? "Rent" : "Sale" }
                     </p>
                     {listing.offer && (
                          <p className='w-full max-w-[300px] bg-green-800 rounded-md p-2 text-white text-center font-semibold shadow-md'>
-                              今なら
-                              {+listing.regularPrice - +listing.discountedPrice}
-                              万円で提供中！
+                              ${+listing.regularPrice - +listing.discountedPrice} discount
                          </p>
                     )}
                </div>
                <p className='mt-3 mb-3'>
-                    <p className='font-semibold'>物件概要 - </p>
+                    <p className='font-semibold'>Description - </p>
                     {listing.description}
                </p>
                <ul className='flex items-center space-x-2 lg:space-x-10 text-sm font-semibold mb-6'>
                     <li className=' flex items-center whitespace-nowrap'>
                          <IoBed className='text-lg mr-1' />
                          {+listing.bedrooms > 1 ? 
-                              `${listing.bedrooms} 寝室` : "1 寝室"
+                              `${listing.bedrooms} Beds` : "1 Bed"
                          }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <FaBath className='text-lg mr-1' />
                          {+listing.bathrooms > 1 ? 
-                              `${listing.bathrooms} 浴室` : "1 浴室"
+                              `${listing.bathrooms} Baths` : "1 Bath"
                          }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <FaParking className='text-lg mr-1' />
-                         {+listing.parking  ? `駐車場有り` : "駐車場無し" }
+                         {+listing.parking  ? `Parking spot` : "No parking" }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <GiSofa className='text-lg mr-1' />
-                         {+listing.furnished  ? `家具付き` : "家具なし" }
+                         {+listing.furnished  ? `Furnished` : "No furnished" }
                     </li>
                </ul>
                {listing.userRef !== auth.currentUser?.uid && !contactLandLoad && ( //視聴者が提供者であるときはコンタクトボタンを表示しない
                     <div className='mt-6'>
                          <button className='px-7 py-3 bg-blue-600 text-white font-medium text-center text-sm rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full transition duration-150 ease-in'
                                  onClick={() => SetContactLandLoad(true)}>
-                              提供者に連絡する
+                              Contact Owner
                          </button>
                     </div>
                )}

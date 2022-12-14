@@ -44,9 +44,9 @@ export const Profile = () => {
                          name : name
                     })
                }
-               toast.success("プロフィールを更新しました")
+               toast.success("Updated my profile")
           }catch(error){
-               toast.error("プロフィールを更新できませんでした")
+               toast.error("cannot update profile")
           }
      }
      useEffect(() => {   //useEffectで一度だけ情報を呼び出す。呼び出す情報は自分でDBに登録したデータ情報
@@ -87,7 +87,7 @@ export const Profile = () => {
     return(
         <>
         <section className="max-w-6xl mx-auto flex justify-center items-center flex-col">
-            <h1 className="text-3xl text-center mt-6 font-bold">プロフィール</h1>
+            <h1 className="text-3xl text-center mt-6 font-bold">Profile</h1>
             <div className="w-full md:w-[50%] mt-6 px-3">
                 <form>
                     {/* name input */}
@@ -97,17 +97,17 @@ export const Profile = () => {
 
                     <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mb-6">
                         <p className="flex items-center">
-                            ユーザ名の変更はこちらから
+                            Edit user name
                             <span 
                                 onClick={() => {
                                   changeDetail && onSubmit()
                                   setChangeDetail((prevState) => !prevState)
                                 }} 
                                 className="text-red-600 hover:text-red-700 transition ease-in-out duration-200 ml-1 cursor-pointer">
-                                {changeDetail ? "変更を適用する" : "編集する"}</span>
+                                {changeDetail ? "Adopt Edit" : "Edit"}</span>
                         </p>
                         <p onClick={onLogout} className="text-blue-600 hover:text-blue-800 transition ease-in-out duration-200 cursor-pointer">
-                            サインアウト
+                            Sign out
                         </p>
                     </div>
                 </form>
@@ -116,7 +116,7 @@ export const Profile = () => {
                     <Link to="/create-listing" 
                           className="flex justify-center items-center ">
                          <FcHome className="mr-2 text-3xl bg-red-200 rounded-full p-1 border-2 "/>
-                         物件を提供する
+                         Post Property
                     </Link>
                 </button>
             </div>
@@ -124,7 +124,7 @@ export const Profile = () => {
         <div className="max-w-6xl px-3 mt-6 mx-auto">
           {!loading && listings.length > 0 && (
                <>
-                    <h2 className="text-2xl text-center font-semibold mb-6 mt-6">自分の提供している物件</h2>
+                    <h2 className="text-2xl text-center font-semibold mb-6 mt-6">My Properties</h2>
                     <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6"> 
                          {listings.map((listing) => (
                               <ListingItem 

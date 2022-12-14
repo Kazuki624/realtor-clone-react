@@ -14,14 +14,14 @@ export const ForgetPassword = () => {
     try {
       const auth = getAuth();
       await sendPasswordResetEmail(auth, email);
-      toast.success("メールを送りました");
+      toast.success("Email was sent");
     } catch (error) {
-      toast.error("問題が発生したため、メールを送信できません");
+      toast.error("Could not send reset password");
     }
   }
   return (
     <section>
-      <h1 className="text-3xl text-center mt-6 font-bold">パスワードを変える</h1>
+      <h1 className="text-3xl text-center mt-6 font-bold">Forgot Password</h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
           <img
@@ -42,12 +42,12 @@ export const ForgetPassword = () => {
             />
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
               <p className="mb-6">
-                アカウントはお持ちですか?
+                Don't have a account?
                 <Link
                   to="/sign-up"
                   className="text-red-600 hover:text-red-700 transition duration-200 ease-in-out ml-1"
                 >
-                  登録
+                  Register
                 </Link>
               </p>
               <p>
@@ -55,7 +55,7 @@ export const ForgetPassword = () => {
                   to="/sign-in"
                   className="text-blue-600 hover:text-blue-700 transition duration-200 ease-in-out ml-1"
                 >
-                  ログインする
+                  Sign in instead
                 </Link>
               </p>
             </div>
@@ -63,7 +63,7 @@ export const ForgetPassword = () => {
               type="submit"
               className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-200 ease-in-out hover:shadow-lg active:bg-blue-800"
             >
-              パスワードのリセットメッセージを送る
+              Send reset password
             </button>
             <div className="my-4 flex items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center font-semibold mx-4 ">OR</p>

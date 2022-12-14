@@ -55,7 +55,7 @@ export const Offers = () => {
      }
     return(
         <div className="max-w-6xl mx-auto px-3 mb-6">
-               <h1 className="text-3xl text-center mt-6 font-bold">掲載物件</h1>
+               <h1 className="text-3xl text-center mt-6 font-bold">Offers</h1>
                {loading ? (
                     <Spinner />
                ) : listings && listings.length > 0 ? (

@@ -15,7 +15,7 @@ export const Contact = ({userRef, listing}) => {    //propsでuserRefとlisting�
                if(docSnap.exists()){
                     setLandLoad(docSnap.data())
                }else{
-                    toast.error("提供者情報を取得できませんでした")
+                    toast.error("Cannot get the owner's information")
                }
           }
           getLandLoad();

@@ -38,7 +38,7 @@ export const EditListing = () => {
      const params = useParams();
      useEffect(() => {
           if(listing && listing.userRef !== auth.currentUser.uid){
-               toast.error("あなたの掲載物件ではないので編集できません");
+               toast.error("You can't edit this Property");
                navigate("/")
           }
      },[auth.currentUser.uid, listing,navigate]);
@@ -56,7 +56,7 @@ export const EditListing = () => {
                     setLoading(false);
                }else{
                     navigate("/");
-                    toast.error("掲載している物件はありません")
+                    toast.error("Your property does not exist")
                }
           }
           fetchListing();
@@ -183,7 +183,7 @@ export const EditListing = () => {
      }
   return (
     <main className='max-w-md px-2 mx-auto'>
-          <h1 className='text-3xl text-center mt-6 font-bold'>編集する</h1>
+          <h1 className='text-3xl text-center mt-6 font-bold'>Edit property</h1>
           <form onSubmit={onSubmit}>
                <p className="text-lg mt-6 font-semibold">Sell / Rent</p>
                <div className='flex'>
