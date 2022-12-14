@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { CreateListing } from "./pages/CreateListing";
 import { EditListing } from "./pages/EditListing";
 import { Listing } from "./pages/Listing";
+import { Category } from "./pages/Category";
 
 function App() {
   return (
@@ -29,8 +30,9 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/offers" element={<Offers />} />
           <Route path="/category/:categoryName/:listingId" element={<Listing />} />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/category/:categoryName" element={<Category />} />
           <Route path="create-listing" element={<PrivateRoute />}> {/*ログイン時のみcreate-listingに行けるようにする*/}
                <Route path="/create-listing" element={<CreateListing />} />
           </Route>

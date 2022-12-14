@@ -18,7 +18,7 @@ export const ListingItem = ({listing, id, onEdit, onDelete}) => {
                          <p className='font-semibold text-sm md-[2px] text-gray-600 truncate'>{listing.address}</p>
                     </div>
                     <p className='font-semibold mt-6 text-xl m-0 truncate'>{listing.name}</p>
-                    <p className='text-[#457b9d] mt-2 font-semibold'>{listing.offer ? listing.discountedPrice
+                    <p className='text-[#457b9d] mt-2 font-semibold'>$ {listing.offer ? listing.discountedPrice
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ",") :
                          listing.regularPrice

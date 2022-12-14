@@ -1,20 +1,22 @@
 import { collection, doc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { useEffect } from "react";
 import { useState } from "react"
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { ListingItem } from "../components/ListingItem";
 import { Spinner } from "../components/Spinner";
 import { db } from "../firebase";
 
-export const Offers = () => {
+export const Category = () => {
      const [listings, setListings] = useState(null);
      const [loading, setLoading] = useState(true);
      const [lastFetchListing, setLastFetchListing] = useState(null);
+     const params = useParams();
      useEffect(() => {
           const fetchListings = async() => {
                try {
                     const listingRef = collection(db, "listings");
-                    const q = query(listingRef, where("offer", "==", true),orderBy("timestamp", "desc"), limit(8));
+                    const q = query(listingRef, where("type", "==", params.categoryName),orderBy("timestamp", "desc"), limit(8));
                     const querySnap = await getDocs(q);
                     const lastVisible = querySnap.docs[querySnap.docs.length -1];
                     setLastFetchListing(lastVisible);
@@ -32,11 +34,12 @@ export const Offers = () => {
                }
           }
           fetchListings()
-     },[])
+     },[params.categoryName])
+
      const onFetchMoreListings = async() => {
           try {
                const listingRef = collection(db, "listings");
-               const q = query(listingRef, where("offer", "==", true),orderBy("timestamp", "desc"), limit(4),startAfter(lastFetchListing));
+               const q = query(listingRef, where("type", "==", params.categoryName),orderBy("timestamp", "desc"), limit(4),startAfter(lastFetchListing));
                const querySnap = await getDocs(q);
                const lastVisible = querySnap.docs[querySnap.docs.length -1];
                setLastFetchListing(lastVisible);
@@ -55,7 +58,9 @@ export const Offers = () => {
      }
     return(
         <div className="max-w-6xl mx-auto px-3 mb-6">
-               <h1 className="text-3xl text-center mt-6 font-bold">Offers</h1>
+               <h1 className="text-3xl text-center mt-6 font-bold">
+                    {params.categoryName === "rent" ? "Place for rent" : "Place for sale"}
+               </h1>
                {loading ? (
                     <Spinner />
                ) : listings && listings.length > 0 ? (
