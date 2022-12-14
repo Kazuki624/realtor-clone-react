@@ -55,8 +55,8 @@ export const Slider = () => {
                                         {data.name}
                                    </p>
                                    <p className="text-[#f1faee] absolute left-1 bottom-1 font-semibold max-w-[90%] bg-[#e63946] shadow-lg opacity-90 p-2 rounded-tr-3xl">
-                                        {data.discountedPrice ?? data.regularPrice}
-                                        {data.type === "rent" && " 万円 / 月"}
+                                        {data.discountedPrice ?? data.regularPrice + " 万円"}
+                                        {data.type === "rent" && " 万円"}
                                    </p>
                               </SwiperSlide>
                          ))}

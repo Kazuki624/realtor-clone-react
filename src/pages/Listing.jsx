@@ -82,7 +82,8 @@ export const Listing = () => {
                          .toString()
                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
-                    {listing.type === "rent" && " / 月 "}
+                    <p className='text-2xl font-bold mb-3 text-blue-900 '>万円</p>
+                    {listing.type === "rent" && "万円 / 月"}
                </p>
                <p className='flex items-center mt-6 mb-3 font-bold'>
                     <ImLocation className='h-4 w-4 text-green-600 mr-1'/>
@@ -90,7 +91,7 @@ export const Listing = () => {
                </p>
                <div className='flex justify-start items-center space-x-4 w-[75%]'>
                     <p className='bg-red-800 w-full max-w-[150px] rounded-md p-2 text-white text-center font-semibold shadow-md'>
-                         {listing.type === "rent" ? "Rent" : "Sale" }
+                         {listing.type === "rent" ? "賃貸物件" : "売買物件" }
                     </p>
                     {listing.offer && (
                          <p className='w-full max-w-[300px] bg-green-800 rounded-md p-2 text-white text-center font-semibold shadow-md'>
@@ -108,22 +109,22 @@ export const Listing = () => {
                     <li className=' flex items-center whitespace-nowrap'>
                          <IoBed className='text-lg mr-1' />
                          {+listing.bedrooms > 1 ? 
-                              `${listing.bedrooms} beds` : "1 bed"
+                              `${listing.bedrooms} 寝室` : "1 寝室"
                          }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <FaBath className='text-lg mr-1' />
                          {+listing.bathrooms > 1 ? 
-                              `${listing.bathrooms} baths` : "1 bath"
+                              `${listing.bathrooms} 浴室` : "1 浴室"
                          }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <FaParking className='text-lg mr-1' />
-                         {+listing.parking  ? `Parking Spot` : "No Parking" }
+                         {+listing.parking  ? `駐車場有り` : "駐車場無し" }
                     </li>
                     <li className=' flex items-center whitespace-nowrap'>
                          <GiSofa className='text-lg mr-1' />
-                         {+listing.furnished  ? `Furnished` : "Not Furnished" }
+                         {+listing.furnished  ? `家具付き` : "家具なし" }
                     </li>
                </ul>
                {listing.userRef !== auth.currentUser?.uid && !contactLandLoad && ( //視聴者が提供者であるときはコンタクトボタンを表示しない

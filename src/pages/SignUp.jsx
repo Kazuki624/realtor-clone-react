@@ -49,12 +49,12 @@ export const SignUp = () => {
       toast.success("Sign up was successful");
       navigate("/");
     } catch (error) {
-      toast.error("Something went wrong with the registration");
+      toast.error("問題が発生したため、アカウント登録ができませんでした");
     }
   }
   return (
     <section>
-      <h1 className="text-3xl text-center mt-6 font-bold">Sign Up</h1>
+      <h1 className="text-3xl text-center mt-6 font-bold">アカウント登録</h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
           <img
@@ -70,7 +70,7 @@ export const SignUp = () => {
               id="name"
               value={name}
               onChange={onchange}
-              placeholder="Full name"
+              placeholder="田中　太郎"
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6"
             />
             <input
@@ -78,7 +78,7 @@ export const SignUp = () => {
               id="email"
               value={email}
               onChange={onchange}
-              placeholder="Email address"
+              placeholder="xxx@mail.com"
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out mb-6"
             />
             <div className="relative mb-6">
@@ -87,7 +87,7 @@ export const SignUp = () => {
                 id="password"
                 value={password}
                 onChange={onchange}
-                placeholder="Password"
+                placeholder="パスワード"
                 className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
               />
               {showPassword ? (
@@ -103,21 +103,21 @@ export const SignUp = () => {
               )}
             </div>
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
-              <p className="mb-6">
-                Have an account?
+              <p className="mb-6 text-sm">
+                アカウントはお持ちですか?
                 <Link
                   to="/sign-in"
                   className="text-red-600 hover:text-red-700 transition duration-200 ease-in-out ml-1"
                 >
-                  Sign In
+                  サインイン
                 </Link>
               </p>
-              <p>
+              <p className="text-sm">
                 <Link
                   to="/forget-password"
                   className="text-blue-600 hover:text-blue-700 transition duration-200 ease-in-out ml-1"
                 >
-                  Forget Password?
+                  パスワードを忘れた方はこちら
                 </Link>
               </p>
             </div>
@@ -125,7 +125,7 @@ export const SignUp = () => {
               type="submit"
               className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-200 ease-in-out hover:shadow-lg active:bg-blue-800"
             >
-              Sign Up
+              登録する
             </button>
             <div className="my-4 flex items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center font-semibold mx-4 ">OR</p>

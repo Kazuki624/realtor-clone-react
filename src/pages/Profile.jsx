@@ -44,9 +44,9 @@ export const Profile = () => {
                          name : name
                     })
                }
-               toast.success("Profile details updated")
+               toast.success("プロフィールを更新しました")
           }catch(error){
-               toast.error("Could not update the profile details")
+               toast.error("プロフィールを更新できませんでした")
           }
      }
      useEffect(() => {   //useEffectで一度だけ情報を呼び出す。呼び出す情報は自分でDBに登録したデータ情報
