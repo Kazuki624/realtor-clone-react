@@ -310,7 +310,7 @@ export const EditListing = () => {
                </div>
                <button type="submit"
                        className='w-full mb-6 px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'>
-                         編集を完了する
+                         Complete Edit
                </button>
           </form>
     </main>
