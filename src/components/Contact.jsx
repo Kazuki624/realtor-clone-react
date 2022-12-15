@@ -29,7 +29,7 @@ export const Contact = ({userRef, listing}) => {    //propsでuserRefとlisting�
           {landLoad !== null && (     
                <div className='flex flex-col w-full'>
                     <p>
-                         提供者に{listing.name.toLowerCase()}について連絡する
+                         Contact about {listing.name.toLowerCase()}
                     </p>
                     <div className='mt-3 mb-6'>
                          <textarea name="message" id="message" rows="2" value={message}
